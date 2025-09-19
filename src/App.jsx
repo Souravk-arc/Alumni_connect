@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import HomePage from "./Home/HomePage.jsx";
@@ -9,7 +9,7 @@ import AlumniSignup from "./pages/AlumniSignup.jsx";
 import StudentSignup from "./pages/StudentSignup.jsx";
 import FacultySignup from "./pages/FacultySignup.jsx";
 import AdminSignup from "./pages/AdminSignup.jsx";
-import RecruiterSignup from "./pages/RecruiterSignup.jsx";
+import RecruiterSignup from "./pages/EmployerSignup.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import AlumniDashboard from "./pages/AlumniDashboard.jsx";
 import StudentDashboard from "./pages/StudentDashboard.jsx";
@@ -19,35 +19,48 @@ import RecruiterDashboard from "./pages/RecruiterDashboard.jsx";
 import JobBoard from "./pages/JobBoard.jsx";
 
 export default function App() {
-  const [user, setUser] = useState(null);
+  const location = useLocation();  // 👈 detect current path
+
+  // pages where navbar should be hidden
+  const hideNavbarRoutes = [
+    "/login",
+    "/register",
+    "/signup/alumni",
+    "/signup/student",
+    "/signup/faculty",
+    "/signup/admin",
+    "/signup/employer",
+  ];
+
+  const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (
-    <>
-      <Navbar user={user} setUser={setUser} />
-      <div className="min-h-screen">
+    <div className="flex flex-col min-h-screen">
+      {/* Only show Navbar if not on login/signup routes */}
+      {!shouldHideNavbar && <Navbar />}
+
+      <main className="flex-grow">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login setUser={setUser} />} />
-          <Route path="/signup" element={<SignupOptions />} />
-          <Route path="/signup/alumni" element={<AlumniSignup setUser={setUser} />} />
-          <Route path="/signup/student" element={<StudentSignup setUser={setUser} />} />
-          <Route path="/signup/faculty" element={<FacultySignup setUser={setUser} />} />
-          <Route path="/signup/admin" element={<AdminSignup setUser={setUser} />} />
-          <Route path="/signup/recruiter" element={<RecruiterSignup setUser={setUser} />} />
-          
-          {/* Role-based dashboards */}
-          <Route path="/dashboard" element={user ? <Dashboard user={user} /> : <Navigate to="/login" />} />
-          <Route path="/dashboard/alumni" element={<AlumniDashboard user={user} />} />
-          <Route path="/dashboard/student" element={<StudentDashboard user={user} />} />
-          <Route path="/dashboard/faculty" element={<FacultyDashboard user={user} />} />
-          <Route path="/dashboard/admin" element={<AdminDashboard user={user} />} />
-          <Route path="/dashboard/recruiter" element={<RecruiterDashboard user={user} />} />
-
-          {/* Jobs page */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<SignupOptions />} />
+          <Route path="/signup/alumni" element={<AlumniSignup />} />
+          <Route path="/signup/student" element={<StudentSignup />} />
+          <Route path="/signup/faculty" element={<FacultySignup />} />
+          <Route path="/signup/admin" element={<AdminSignup />} />
+          <Route path="/signup/employer" element={<RecruiterSignup />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/alumni" element={<AlumniDashboard />} />
+          <Route path="/dashboard/student" element={<StudentDashboard />} />
+          <Route path="/dashboard/faculty" element={<FacultyDashboard />} />
+          <Route path="/dashboard/admin" element={<AdminDashboard />} />
+          <Route path="/dashboard/employer" element={<RecruiterDashboard />} />
           <Route path="/jobs" element={<JobBoard />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </div>
-      <Footer />
-    </>
+      </main>
+
+      {!shouldHideNavbar && <Footer />}
+    </div>
   );
 }

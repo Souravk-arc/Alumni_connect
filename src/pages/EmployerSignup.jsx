@@ -1,15 +1,14 @@
 import { useState } from "react";
 
-export default function AlumniSignup() {
+export default function EmployerSignup() {
   const [form, setForm] = useState({
     name: "",
     email: "",
-    batchYear: "",
-    department: "",
-    degree: "",
-    currentCompany: "",
-    designation: "",
-    location: "",
+    recruiterRole: "",
+    companyName: "",
+    companyWebsite: "",
+    industry: "",
+    companySize: "",
   });
 
   const update = (field) => (e) => {
@@ -18,16 +17,16 @@ export default function AlumniSignup() {
 
   const submitForm = (e) => {
     e.preventDefault();
-    console.log("Alumni Signup Data:", form);
-    // TODO: connect with backend
-    alert("Alumni account created 🎓");
+    console.log("Employer Signup Data:", form);
+    // TODO: integrate with backend API
+    alert("Employer account created ✅");
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-950 px-4 py-12">
       <div className="w-full max-w-3xl bg-white dark:bg-slate-900 shadow-lg rounded-2xl p-8">
         <h1 className="text-2xl font-bold text-slate-800 dark:text-white mb-6 text-center">
-          Create Alumni Account
+          Create Employer Account
         </h1>
 
         <form onSubmit={submitForm} className="space-y-6">
@@ -41,6 +40,7 @@ export default function AlumniSignup() {
             </label>
             <input
               id="name"
+              name="name"
               value={form.name}
               onChange={update("name")}
               placeholder="Enter your full name"
@@ -49,127 +49,109 @@ export default function AlumniSignup() {
             />
           </div>
 
-          {/* Email + Batch Year */}
+          {/* Email + Role */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
-                Email
+                Company email
               </label>
               <input
                 id="email"
                 type="email"
                 value={form.email}
                 onChange={update("email")}
-                placeholder="you@example.com"
+                placeholder="you@company.com"
                 className="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 px-3 py-2 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
             <div>
               <label
-                htmlFor="batchYear"
+                htmlFor="recruiterRole"
                 className="block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
-                Batch year
+                Role / Title
               </label>
               <input
-                id="batchYear"
-                value={form.batchYear}
-                onChange={update("batchYear")}
-                placeholder="e.g. 2018"
+                id="recruiterRole"
+                value={form.recruiterRole}
+                onChange={update("recruiterRole")}
+                placeholder="Recruiter / Hiring Manager"
                 className="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 px-3 py-2 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                required
               />
             </div>
           </div>
 
-          {/* Department + Degree */}
+          {/* Company Name + Website */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label
-                htmlFor="department"
+                htmlFor="companyName"
                 className="block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
-                Department
+                Company name
               </label>
               <input
-                id="department"
-                value={form.department}
-                onChange={update("department")}
-                placeholder="e.g. CSE, ECE"
+                id="companyName"
+                value={form.companyName}
+                onChange={update("companyName")}
+                placeholder="Enter company name"
                 className="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 px-3 py-2 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
             <div>
               <label
-                htmlFor="degree"
+                htmlFor="companyWebsite"
                 className="block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
-                Degree
+                Company website (optional)
               </label>
               <input
-                id="degree"
-                value={form.degree}
-                onChange={update("degree")}
-                placeholder="e.g. B.Tech, MBA"
+                id="companyWebsite"
+                value={form.companyWebsite}
+                onChange={update("companyWebsite")}
+                placeholder="https://example.com"
                 className="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 px-3 py-2 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
 
-          {/* Current Company + Designation */}
+          {/* Industry + Company Size */}
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label
-                htmlFor="currentCompany"
+                htmlFor="industry"
                 className="block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
-                Current Company (optional)
+                Industry
               </label>
               <input
-                id="currentCompany"
-                value={form.currentCompany}
-                onChange={update("currentCompany")}
-                placeholder="Company name"
+                id="industry"
+                value={form.industry}
+                onChange={update("industry")}
+                placeholder="e.g. IT, Finance, Healthcare"
                 className="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 px-3 py-2 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
             <div>
               <label
-                htmlFor="designation"
+                htmlFor="companySize"
                 className="block text-sm font-medium text-slate-700 dark:text-slate-300"
               >
-                Designation (optional)
+                Company size (optional)
               </label>
               <input
-                id="designation"
-                value={form.designation}
-                onChange={update("designation")}
-                placeholder="e.g. Software Engineer"
+                id="companySize"
+                value={form.companySize}
+                onChange={update("companySize")}
+                placeholder="e.g. 50-200"
                 className="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 px-3 py-2 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-          </div>
-
-          {/* Location */}
-          <div>
-            <label
-              htmlFor="location"
-              className="block text-sm font-medium text-slate-700 dark:text-slate-300"
-            >
-              Location (optional)
-            </label>
-            <input
-              id="location"
-              value={form.location}
-              onChange={update("location")}
-              placeholder="City, Country"
-              className="mt-2 w-full rounded-lg border border-slate-300 dark:border-slate-700 px-3 py-2 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
           </div>
 
           {/* Submit */}
@@ -178,7 +160,7 @@ export default function AlumniSignup() {
               type="submit"
               className="rounded-lg bg-blue-600 hover:bg-blue-700 active:scale-95 transition px-8 py-3 text-white font-medium shadow-md"
             >
-              Create Alumni Account
+              Create Employer Account
             </button>
           </div>
         </form>
